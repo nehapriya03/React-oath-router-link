@@ -20,8 +20,10 @@ const GoogleAuth = ({ isSignedIn, signIn, signOut }) => {
   });
 
   const onAuthChange = (isSignedIn) => {
+    const auth = window.gapi.auth2.getAuthInstance();
+
     if (isSignedIn) {
-      signIn();
+      signIn(auth.currentUser.get().getId());
     } else {
       signOut();
     }
@@ -36,7 +38,6 @@ const GoogleAuth = ({ isSignedIn, signIn, signOut }) => {
   };
 
   const renderAuthButton = () => {
-    console.log(isSignedIn);
     if (!isSignedIn) {
       return (
         <button className="ui red google button" onClick={onSignInClick}>
